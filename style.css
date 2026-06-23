@@ -1073,6 +1073,7 @@ p {
   background-color: var(--color-accent);
   border-color: var(--color-border);
   box-shadow: var(--shadow-md);
+  transform: translateY(-8px);
 }
 
 .why-icon {
@@ -1125,6 +1126,7 @@ p {
 .doctor-card:hover {
   box-shadow: var(--shadow-premium);
   border-color: var(--color-primary-light);
+  transform: translateY(-8px);
 }
 
 .doctor-img-box {
@@ -1726,14 +1728,38 @@ select.form-control {
   color: var(--color-accent);
 }
 
-/* --- Reveal Scroll Animation --- */
-.reveal {
+/* --- Reveal Scroll Animations --- */
+.reveal-up, .reveal-left, .reveal-right, .reveal-scale {
   opacity: 0;
-  transform: translateY(30px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal.revealed {
+.reveal-up { transform: translateY(30px); }
+.reveal-left { transform: translateX(-30px); }
+.reveal-right { transform: translateX(30px); }
+.reveal-scale { transform: scale(0.95); }
+
+.revealed.reveal-up, 
+.revealed.reveal-left, 
+.revealed.reveal-right {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(0, 0);
+}
+
+.revealed.reveal-scale {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- Native CSS Parallax (Progressive Enhancement) --- */
+@supports (animation-timeline: scroll()) {
+  .parallax {
+    animation: parallax-scroll linear;
+    animation-timeline: scroll();
+  }
+}
+
+@keyframes parallax-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120px); }
 }

@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.closeDrawer = closeDrawer;
 
   // --- Intersection Observer (Scroll Reveal) ---
-  const revealElements = document.querySelectorAll('.reveal');
+  const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
   if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
