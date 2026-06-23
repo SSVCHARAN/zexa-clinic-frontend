@@ -1728,38 +1728,38 @@ select.form-control {
   color: var(--color-accent);
 }
 
-/* --- Reveal Scroll Animations --- */
-.reveal-up, .reveal-left, .reveal-right, .reveal-scale {
-  opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* --- GSAP Horizontal Scroll Section --- */
+.horizontal-scroll-section {
+  overflow: hidden;
+  padding: var(--space-xl) 0 0 0; /* Remove bottom padding to let container handle it */
+  background-color: var(--color-accent);
 }
 
-.reveal-up { transform: translateY(30px); }
-.reveal-left { transform: translateX(-30px); }
-.reveal-right { transform: translateX(30px); }
-.reveal-scale { transform: scale(0.95); }
-
-.revealed.reveal-up, 
-.revealed.reveal-left, 
-.revealed.reveal-right {
-  opacity: 1;
-  transform: translate(0, 0);
+.horizontal-scroll-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: var(--space-md);
 }
 
-.revealed.reveal-scale {
-  opacity: 1;
-  transform: scale(1);
+.horizontal-track {
+  display: flex;
+  gap: var(--space-lg);
+  padding: 0 var(--space-xl);
+  width: max-content;
+  align-items: stretch;
 }
 
-/* --- Native CSS Parallax (Progressive Enhancement) --- */
-@supports (animation-timeline: scroll()) {
-  .parallax {
-    animation: parallax-scroll linear;
-    animation-timeline: scroll();
+.horizontal-track .why-card {
+  width: 320px;
+  flex-shrink: 0;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .horizontal-track .why-card {
+    width: 280px;
   }
-}
-
-@keyframes parallax-scroll {
-  from { transform: translateY(0); }
-  to { transform: translateY(-120px); }
 }
