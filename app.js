@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
                        window.location.hostname.includes('loca.lt') ||
                        window.location.protocol === 'file:')
     ? 'http://localhost:8000' 
-    : 'https://zexa-clinic.onrender.com';
+    : 'https://zexa-clinic-backend.onrender.com';
 
   // Update Admin Login link
   const adminLoginLink = document.getElementById('adminLoginLink');

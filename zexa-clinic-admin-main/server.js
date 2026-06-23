@@ -41,25 +41,7 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
-// Subdomain / Host Routing Middleware
-app.use((req, res, next) => {
-  const host = req.headers.host || '';
-  const isSubdomainAdmin = host.toLowerCase().startsWith('admin.');
-  const isLocalDev = host.includes('localhost') || host.includes('127.0.0.1') || host.includes('10.123.105.');
-
-  if (isSubdomainAdmin) {
-    // If accessing the root of the admin subdomain, redirect to the login page
-    if (req.path === '/' || req.path === '/index.html') {
-      return res.redirect('/admin/login.html');
-    }
-  } else if (!isLocalDev) {
-    // In production, block direct access to the /admin/ path on the public domain
-    if (req.path.startsWith('/admin/')) {
-      return res.status(404).send('Page not found');
-    }
-  }
-  next();
-});
+// Subdomain routing is removed since the backend is hosted on its own URL
 
 
 // Setup Session Middleware
