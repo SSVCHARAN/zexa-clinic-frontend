@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update Admin Login link
   const adminLoginLink = document.getElementById('adminLoginLink');
   if (adminLoginLink) {
-    adminLoginLink.href = `${BACKEND_URL}/admin/login.html`;
+    adminLoginLink.href = `${BACKEND_URL}/admin/login.html?returnUrl=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
   }
 
   // --- Sticky Navigation Scroll Listener ---

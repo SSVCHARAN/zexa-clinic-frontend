@@ -790,20 +790,23 @@ p {
   }
   .card-google {
     top: 8%;
-    left: -2%;
+    left: 10px;
     max-width: 140px;
+    z-index: 10;
   }
   .card-slots {
     bottom: 4%;
-    right: -2%;
+    right: 10px;
     font-size: 0.75rem;
     padding: 0.4rem 0.75rem;
+    z-index: 10;
   }
   .card-certified {
     bottom: 35%;
-    left: -4%;
+    left: 10px;
     font-size: 0.75rem;
     padding: 0.4rem 0.75rem;
+    z-index: 10;
   }
   .rating-stars {
     font-size: 0.8rem;

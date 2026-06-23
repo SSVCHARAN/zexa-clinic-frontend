@@ -37,6 +37,12 @@
       overflow: hidden;
     }
 
+    @media (max-width: 480px) {
+      .login-container {
+        padding: var(--space-md);
+      }
+    }
+
     /* Subtle background glow for premium feel */
     .login-glow {
       position: absolute;
@@ -222,6 +228,24 @@
       const passwordInput = document.getElementById('password');
       const submitBtn = document.getElementById('submitBtn');
       const globalErrorBox = document.getElementById('globalErrorBox');
+
+      // Dynamic Return URL Logic
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnUrl = urlParams.get('returnUrl');
+      const backHomeLink = document.querySelector('.back-home');
+      const logoLink = document.querySelector('.logo');
+      
+      if (returnUrl) {
+        backHomeLink.href = returnUrl;
+        logoLink.href = returnUrl;
+      } else if (document.referrer && !document.referrer.includes('/admin/')) {
+        backHomeLink.href = document.referrer;
+        logoLink.href = document.referrer;
+      } else {
+        // Safe fallback if opened directly
+        backHomeLink.href = 'javascript:history.back()';
+        logoLink.href = 'javascript:history.back()';
+      }
 
       const showError = (inputElement, errorElement, show = true) => {
         if (show) {

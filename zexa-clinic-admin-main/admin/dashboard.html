@@ -118,6 +118,7 @@
       height: 64px;
     }
 
+
     .user-info {
       font-weight: 600;
       font-size: 0.9rem;
@@ -252,7 +253,8 @@
     .modal-overlay.active { display: flex; }
     .modal-content {
       background: var(--color-accent); border-radius: var(--radius-lg);
-      padding: var(--space-xl); width: 100%; max-width: 500px;
+      padding: var(--space-xl); width: 90%; max-width: 500px;
+      max-height: 90vh; overflow-y: auto;
       position: relative;
     }
     .modal-close {
@@ -273,7 +275,7 @@
       background-color: var(--color-accent);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
+      overflow-x: auto;
       box-shadow: var(--shadow-sm);
     }
 
@@ -361,11 +363,53 @@
       color: var(--color-primary);
     }
     @keyframes rotateSpinner { 100% { transform: rotate(360deg); } }
+    
+    /* Responsive */
+    .mobile-menu-btn { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; margin-right: 1rem; color: var(--color-primary); }
+    .sidebar-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:900; }
+    
+    @media (max-width: 1024px) {
+      .sidebar { position: fixed; left: -280px; transition: 0.3s; z-index: 1000; box-shadow: var(--shadow-lg); }
+      .sidebar.open { left: 0; }
+      .sidebar-overlay.open { display: block; }
+      .mobile-menu-btn { display: block; }
+      .main-wrapper { margin-left: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .content-area {
+        padding: var(--space-sm); /* Reduce side padding significantly */
+      }
+      .top-header {
+        padding: 0.5rem var(--space-sm); /* Reduce header padding */
+        height: auto;
+        min-height: 56px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+      .stat-card {
+        padding: var(--space-md); /* Reduce internal card padding */
+      }
+      .view-title {
+        font-size: 1.4rem;
+        margin-bottom: var(--space-md);
+      }
+      .controls-panel {
+        padding: var(--space-sm);
+      }
+      .data-table th, .data-table td {
+        padding: var(--space-sm) var(--space-xs); /* Reduce cell padding to maximize table visibility */
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="dashboard-layout">
+    
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -430,7 +474,10 @@
     <main class="main-wrapper">
       
       <header class="top-header">
-        <div class="user-info" id="adminWelcome">Welcome, Administrator</div>
+        <div style="display: flex; align-items: center;">
+          <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+          <div class="user-info" id="adminWelcome">Welcome, Administrator</div>
+        </div>
         <button id="logoutBtn" class="btn-logout">Sign Out</button>
       </header>
 
@@ -655,6 +702,10 @@
             section.classList.remove('active');
           }
         });
+
+        // Auto close sidebar on mobile
+        document.querySelector('.sidebar').classList.remove('open');
+        document.querySelector('.sidebar-overlay').classList.remove('open');
       };
 
       navItems.forEach(item => {
@@ -778,7 +829,7 @@
             <td>
               <div class="patient-details">
                 <span class="patient-name">${record.name}</span>
-                <span class="patient-meta" style="font-size:0.8rem; color:var(--color-text-muted);">${record.email} &bull; ${record.phone}</span>
+                <div class="patient-meta" style="font-size:0.8rem; color:var(--color-text-muted);">${record.email} &bull; ${record.phone}</div>
               </div>
             </td>
             <td><div style="font-weight: 600;">${formatDate(record.date)}</div></td>
@@ -788,11 +839,12 @@
             </td>
             <td style="color: var(--color-text-muted); font-size: 0.85rem;">
               ${formatDateTime(record.createdAt)}
-              <br>
-              ${record.status === 'Done' 
-                ? `<button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#D97706; border-color:#D97706;" onclick="updateAppointmentStatus('${record.id}', 'Pending')">Mark Pending</button>` 
-                : `<button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#10B981; border-color:#10B981;" onclick="updateAppointmentStatus('${record.id}', 'Done')">Mark Done</button>`}
-              <button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#ef4444; border-color:#ef4444;" onclick="deleteAppointment('${record.id}')">Delete</button>
+              <div style="margin-top:0.5rem; display: flex; gap: 5px;">
+                ${record.status === 'Done' 
+                  ? `<button class="btn btn-outline" style="padding:0.2rem 0.5rem; font-size:0.75rem; color:#D97706; border-color:#D97706;" onclick="updateAppointmentStatus('${record.id}', 'Pending')">Mark Pending</button>` 
+                  : `<button class="btn btn-outline" style="padding:0.2rem 0.5rem; font-size:0.75rem; color:#10B981; border-color:#10B981;" onclick="updateAppointmentStatus('${record.id}', 'Done')">Mark Done</button>`}
+                <button class="btn btn-outline" style="padding:0.2rem 0.5rem; font-size:0.75rem; color:#ef4444; border-color:#ef4444;" onclick="deleteAppointment('${record.id}')">Delete</button>
+              </div>
             </td>
           `;
           appointmentsList.appendChild(row);
@@ -966,6 +1018,11 @@
 
       fetchAppointments();
     });
+
+    window.toggleSidebar = function() {
+      document.querySelector('.sidebar').classList.toggle('open');
+      document.querySelector('.sidebar-overlay').classList.toggle('open');
+    };
   </script>
 </body>
 </html>
