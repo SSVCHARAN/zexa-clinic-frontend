@@ -379,7 +379,7 @@ p {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 100%;
+  width: 85%; /* Leave some overlay visible for tap-to-close */
   max-width: 380px;
   height: 100vh;
   background-color: var(--color-accent);
@@ -390,6 +390,25 @@ p {
   flex-direction: column;
   justify-content: space-between;
   transition: var(--transition-normal);
+}
+
+.drawer-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  z-index: 110;
+  line-height: 0.5;
+  padding: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.drawer-close-btn:hover {
+  transform: scale(1.1);
 }
 
 .mobile-drawer.open {
