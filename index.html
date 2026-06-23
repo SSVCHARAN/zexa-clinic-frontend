@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zexa Clinic - Premium, patient-focused healthcare in India. Experience UK-inspired private clinical standards, expert doctors, and personalized family healthcare.">
+  <meta name="keywords" content="clinic, healthcare, India clinic, private doctor, specialist consultation, health checkup, Zexa Clinic, family healthcare">
+  <title>Zexa Clinic | Trusted Healthcare & Premium Family Care</title>
+  
+  <!-- Preconnect Google Fonts for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Favicon placeholder (SVG logo) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23021F94'/%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- Toast Notification Alert Overlay -->
+  <div class="toast-container" id="toastContainer" aria-live="polite">
+    <div class="toast" id="bookingToast">
+      <div class="toast-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+      <div>
+        <div class="toast-title">Appointment Requested</div>
+        <div class="toast-text" id="toastMessage">We will call you shortly to confirm your booking.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- Header / Sticky Navbar --- -->
+  <header class="header" id="header">
+    <div class="container navbar">
+      <a href="#" class="logo" aria-label="Zexa Clinic Home">
+        <span class="logo-icon"></span>Zexa Clinic
+      </a>
+      
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About Us</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#why-choose-us" class="nav-link">Why Choose Us</a></li>
+          <li><a href="#doctors" class="nav-link">Our Doctors</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="#book-appointment" class="btn btn-primary">Book Appointment</a>
+      </div>
+
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+    <div>
+      <a href="#" class="logo" aria-label="Zexa Clinic Home">
+        <span class="logo-icon"></span>Zexa Clinic
+      </a>
+      <ul class="mobile-drawer-links">
+        <li><a href="#" class="mobile-drawer-link" onclick="closeDrawer()">Home</a></li>
+        <li><a href="#about" class="mobile-drawer-link" onclick="closeDrawer()">About Us</a></li>
+        <li><a href="#services" class="mobile-drawer-link" onclick="closeDrawer()">Services</a></li>
+        <li><a href="#why-choose-us" class="mobile-drawer-link" onclick="closeDrawer()">Why Choose Us</a></li>
+        <li><a href="#doctors" class="mobile-drawer-link" onclick="closeDrawer()">Our Doctors</a></li>
+        <li><a href="#contact" class="mobile-drawer-link" onclick="closeDrawer()">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <a href="#book-appointment" class="btn btn-primary" style="width: 100%; margin-bottom: var(--space-sm);" onclick="closeDrawer()">Book Appointment</a>
+      <a href="tel:+919999999999" class="btn btn-secondary" style="width: 100%;" onclick="closeDrawer()">Call Clinic</a>
+      <div class="mobile-drawer-footer">
+        <p>Zexa Clinic, GK-2, New Delhi</p>
+        <p>Mon - Sat: 8:00 AM - 8:00 PM</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- --- Hero Section --- -->
+    <section class="hero bg-light">
+      <!-- Premium Glowing Backdrop Blobs -->
+      <div class="hero-glow-blob"></div>
+      <div class="hero-glow-blob-secondary"></div>
+      
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span> UK Clinical Standards in India
+          </div>
+          <h1 class="hero-title">Trusted Healthcare <br><span class="highlight-serif-italic">for your family</span></h1>
+          <p class="hero-description">Experience world-class healthcare combined with premium British clinical aesthetics and medical standards. Our expert doctors offer personalized, patient-centric general and specialist care.</p>
+          <div class="hero-ctas">
+            <a href="#book-appointment" class="btn btn-primary">
+              Book Appointment
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="tel:+919999999999" class="btn btn-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Call Now
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <h3>15+</h3>
+              <p>Expert Doctors</p>
+            </div>
+            <div class="stat-item">
+              <h3>99%</h3>
+              <p>Patient Care</p>
+            </div>
+            <div class="stat-item">
+              <h3>24/7</h3>
+              <p>Emergency Line</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-image-wrapper reveal" style="transition-delay: 0.1s;">
+          <!-- Background geometric aesthetic circle -->
+          <div class="hero-image-bg-shape"></div>
+          
+          <!-- British Arch Style Portrait Frame -->
+          <div class="hero-image-arch">
+            <img src="assets/hero_doctor.png" alt="A senior Indian medical consultant representing the trustworthy clinical team of Zexa Clinic">
+          </div>
+          
+          <!-- Floating Overlay Card 1: Google Rating / Trust -->
+          <div class="hero-floating-card card-google">
+            <div class="rating-stars">★★★★★</div>
+            <div class="rating-text"><strong>4.9 Google Rating</strong></div>
+            <div class="rating-sub">New Delhi's Top Practice</div>
+          </div>
+          
+          <!-- Floating Overlay Card 2: Live Slots (with breathing indicator dot) -->
+          <div class="hero-floating-card card-slots">
+            <span class="live-dot-pulse"></span>
+            <div class="slots-text">Live Booking Slots Open</div>
+          </div>
+
+          <!-- Floating Overlay Card 3: Quality standards -->
+          <div class="hero-floating-card card-certified">
+            <div class="certified-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 12 12 14 14"></polyline></svg>
+            </div>
+            <div class="certified-text">UK Excellence Standards</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- About Clinic --- -->
+    <section id="about" class="section">
+      <div class="container about-grid">
+        <div class="about-visual-group reveal">
+          <div class="about-img-main">
+            <!-- Using hero doctor image as a high-quality clinic team photo placeholder -->
+            <img src="assets/hero_doctor.png" alt="Zexa Clinic Consultation Room Setup">
+          </div>
+          <div class="about-img-sub">
+            <img src="assets/doctor_ananya.png" alt="Zexa Clinic Medical Diagnostics Equipment">
+          </div>
+        </div>
+        <div class="about-content reveal" style="transition-delay: 0.1s;">
+          <span class="section-tag">About Zexa Clinic</span>
+          <h2 class="section-title">A New Standard of Medical Excellence in India</h2>
+          <p class="booking-info-text">Zexa Clinic represents a refined synthesis of absolute clinical trust, premium patient comfort, and top-tier expertise. Inspired by clean, minimalist British private wellness models, we provide a modern medical experience where your comfort and diagnostic precision take center stage.</p>
+          <p style="margin-bottom: var(--space-md);">Our mission is to shift healthcare from a transactional system to a highly personalized journey, with state-of-the-art diagnostic facilities and a warm, compassionate team that respects your time and health.</p>
+          
+          <div class="about-features">
+            <div class="about-feat-item">
+              <div class="about-feat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div class="about-feat-text">
+                <h4>Safety First</h4>
+                <p>Strict clinical sanitization protocols following international guidelines.</p>
+              </div>
+            </div>
+            <div class="about-feat-item">
+              <div class="about-feat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="about-feat-text">
+                <h4>Time Respect</h4>
+                <p>Digital appointment queues to guarantee minimal waiting times.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Services Section --- -->
+    <section id="services" class="section bg-light">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Our Care Specialties</span>
+          <h2 class="section-title">Comprehensive Premium Medical Services</h2>
+          <p>We provide a complete range of healthcare services designed for patients looking for world-class, professional medical consultation and preventive checkups.</p>
+        </div>
+        
+        <div class="services-grid">
+          <!-- General Consultation -->
+          <div class="service-card reveal">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <h3 class="service-title">General Consultation</h3>
+            </div>
+            <div class="service-body">
+              <p>Thorough health assessments and management of acute or chronic illnesses for all family members by senior medical practitioners.</p>
+              <a href="#book-appointment" class="service-link">
+                Book Consultation
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Specialist Care -->
+          <div class="service-card reveal" style="transition-delay: 0.1s;">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+              </div>
+              <h3 class="service-title">Specialist Care</h3>
+            </div>
+            <div class="service-body">
+              <p>Specialized diagnosis and expert therapeutic pathways in pediatric medicine, high-end cardiology, metabolic health, and dermatology.</p>
+              <a href="#book-appointment" class="service-link">
+                Book Consultation
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Diagnostic Services -->
+          <div class="service-card reveal" style="transition-delay: 0.2s;">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M10 15h4"></path><path d="M12 10V3"></path></svg>
+              </div>
+              <h3 class="service-title">Diagnostic Services</h3>
+            </div>
+            <div class="service-body">
+              <p>In-house computerized diagnostic lab testing, ultrasound screenings, detailed cardiovascular workups, and precise reporting.</p>
+              <a href="#book-appointment" class="service-link">
+                Request Test
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Preventive Health Checkups -->
+          <div class="service-card reveal">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </div>
+              <h3 class="service-title">Preventive Health</h3>
+            </div>
+            <div class="service-body">
+              <p>Proactive executive wellness and family healthcare packages mapped specifically to age-related risk profiles and genetics.</p>
+              <a href="#book-appointment" class="service-link">
+                View Packages
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Vaccinations -->
+          <div class="service-card reveal" style="transition-delay: 0.1s;">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="2" x2="22" y2="6"></line><line x1="7.5" y1="10.5" x2="16" y2="19"></line><line x1="9" y1="22" x2="12" y2="22"></line><line x1="2" y1="12" x2="2" y2="15"></line><line x1="13" y1="7" x2="17" y2="11"></line><path d="M2 22 9 15"></path></svg>
+              </div>
+              <h3 class="service-title">Vaccinations</h3>
+            </div>
+            <div class="service-body">
+              <p>WHO-approved immunization procedures for infants, children, international travel needs, and corporate influenza campaigns.</p>
+              <a href="#book-appointment" class="service-link">
+                Book Vaccine
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Chronic Disease Management -->
+          <div class="service-card reveal" style="transition-delay: 0.2s;">
+            <div class="service-header">
+              <div class="service-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
+              </div>
+              <h3 class="service-title">Chronic Care Management</h3>
+            </div>
+            <div class="service-body">
+              <p>Continuous clinical pathways, lifestyle counseling, and medical monitoring for hypertension, diabetes, and thyroid conditions.</p>
+              <a href="#book-appointment" class="service-link">
+                Join Program
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Why Choose Us --- -->
+    <section id="why-choose-us" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">The Zexa Distinction</span>
+          <h2 class="section-title">Why Patients Entrust Us with Their Health</h2>
+          <p>We approach healthcare differently. Your diagnostic precision, recovery speed, and clinic comfort guide every structural decision we make.</p>
+        </div>
+
+        <div class="why-grid">
+          <!-- Experienced Doctors -->
+          <div class="why-card reveal">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A1.2 1.2 0 0 1 6 1.1h12a1.2 1.2 0 0 1 1.2 1.2v19.4a1.2 1.2 0 0 1-1.2 1.2H6a1.2 1.2 0 0 1-1.2-1.2V2.3z"></path><path d="M12 11h.01"></path><path d="M10 8h4"></path><path d="M10 14h4"></path><path d="M9 17h6"></path></svg>
+            </div>
+            <h4>Experienced Doctors</h4>
+            <p>Our consultants carry decades of experience in clinical diagnosis, holding degrees from leading institutions and board positions.</p>
+          </div>
+
+          <!-- Modern Facilities -->
+          <div class="why-card reveal" style="transition-delay: 0.1s;">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+            </div>
+            <h4>Modern Facilities</h4>
+            <p>From advanced cardiac ultrasound to modern sanitization rooms, we equip our staff with state-of-the-art clinic assets.</p>
+          </div>
+
+          <!-- Personalized Care -->
+          <div class="why-card reveal" style="transition-delay: 0.2s;">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <h4>Personalized Care</h4>
+            <p>No generic treatment sheets. We study your family clinical history and lifestyle before scripting therapeutic instructions.</p>
+          </div>
+
+          <!-- Affordable Treatment -->
+          <div class="why-card reveal">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+            </div>
+            <h4>Affordable Treatment</h4>
+            <p>Premium healthcare shouldn't be stressful. We ensure complete billing clarity with no hidden fees or unexpected diagnostic costs.</p>
+          </div>
+
+          <!-- Convenient Appointments -->
+          <div class="why-card reveal" style="transition-delay: 0.1s;">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <h4>Convenient Appointments</h4>
+            <p>Use our responsive web scheduler, email, or direct WhatsApp support lines to coordinate scheduling inside 2 minutes.</p>
+          </div>
+
+          <!-- Patient Satisfaction -->
+          <div class="why-card reveal" style="transition-delay: 0.2s;">
+            <div class="why-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            </div>
+            <h4>Patient Satisfaction</h4>
+            <p>Over 98% of our consults log positive ratings, citing our friendly nurses, clear instructions, and comfortable rooms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Doctor Profiles --- -->
+    <section id="doctors" class="section bg-light">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Zexa Medical Consultants</span>
+          <h2 class="section-title">Meet Our Medical Leadership</h2>
+          <p>Our practitioners hold credentials from top institutions, bringing decades of diagnosis and clinical research to Zexa Clinic.</p>
+        </div>
+
+        <div class="doctors-grid">
+          <!-- Doctor 1: Dr. Vikram Malhotra -->
+          <article class="doctor-card reveal">
+            <div class="doctor-img-box">
+              <img src="assets/doctor_vikram.png" alt="Dr. Vikram Malhotra, Chief Pediatrician at Zexa Clinic">
+            </div>
+            <div class="doctor-info">
+              <div class="doctor-meta">
+                <span class="doctor-tag">Pediatrics</span>
+                <h3 class="doctor-name">Dr. Vikram Malhotra</h3>
+                <p class="doctor-subtitle">MD, FBP (London) - Pediatric Specialist</p>
+                <p class="doctor-experience">15+ Years Clinical Experience</p>
+              </div>
+              <p style="font-size: 0.9rem; margin-bottom: var(--space-md);">Specializes in modern infant immunization, pediatric development milestones, and childhood respiratory management programs.</p>
+              <div class="doctor-footer">
+                <a href="#book-appointment" class="btn btn-secondary btn-icon-round" aria-label="Book appointment with Dr. Vikram Malhotra">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </a>
+                <a href="#book-appointment" class="doctor-contact-btn">
+                  Book Appointment
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Doctor 2: Dr. Ananya Sharma -->
+          <article class="doctor-card reveal" style="transition-delay: 0.1s;">
+            <div class="doctor-img-box">
+              <img src="assets/doctor_ananya.png" alt="Dr. Ananya Sharma, Senior Cardiologist at Zexa Clinic">
+            </div>
+            <div class="doctor-info">
+              <div class="doctor-meta">
+                <span class="doctor-tag">Cardiology</span>
+                <h3 class="doctor-name">Dr. Ananya Sharma</h3>
+                <p class="doctor-subtitle">DM (Cardiology), MBBS (AIIMS) - Senior Cardiologist</p>
+                <p class="doctor-experience">12+ Years Clinical Experience</p>
+              </div>
+              <p style="font-size: 0.9rem; margin-bottom: var(--space-md);">Expert in cardiovascular risk profiles, preventive heart checkups, hypertension care, and post-recovery rehabilitation.</p>
+              <div class="doctor-footer">
+                <a href="#book-appointment" class="btn btn-secondary btn-icon-round" aria-label="Book appointment with Dr. Ananya Sharma">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </a>
+                <a href="#book-appointment" class="doctor-contact-btn">
+                  Book Appointment
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Testimonials Section --- -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header text-center reveal" style="margin-left: auto; margin-right: auto;">
+          <span class="section-tag">Patient Experiences</span>
+          <h2 class="section-title">Stories of Trust & Recovery</h2>
+        </div>
+
+        <div class="testimonials-slider reveal">
+          <div class="testimonials-track" id="testimonialsTrack">
+            <!-- Review 1 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-quote-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+              </div>
+              <blockquote class="testimonial-text">"The level of clinical care and sanitization at Zexa Clinic is completely unmatched in India. It felt like walking into a premium private clinic in Harley Street, London. Absolutely professional staff."</blockquote>
+              <div class="testimonial-author-avatar">RK</div>
+              <cite class="testimonial-author-name">Rajesh Kumar</cite>
+              <span class="testimonial-author-role">Delhi, Patient</span>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-quote-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+              </div>
+              <blockquote class="testimonial-text">"Dr. Vikram was wonderful with my toddler during her vaccinations. The scheduler works instantly, and we were called into the consulting room exactly on our scheduled time."</blockquote>
+              <div class="testimonial-author-avatar">PP</div>
+              <cite class="testimonial-author-name">Priya Patel</cite>
+              <span class="testimonial-author-role">Gurgaon, Parent</span>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-quote-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+              </div>
+              <blockquote class="testimonial-text">"I booked the Preventive Health Package for my parents. The cardiac screening was very detailed, and Dr. Ananya took 30 minutes to explain the heart risk index report. Exceptional clinic."</blockquote>
+              <div class="testimonial-author-avatar">AS</div>
+              <cite class="testimonial-author-name">Amit Sen</cite>
+              <span class="testimonial-author-role">Noida, Consultant</span>
+            </div>
+          </div>
+
+          <div class="testimonials-nav">
+            <button class="btn-icon-round" id="prevTestimonial" aria-label="Previous Review">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="testimonials-dots" id="testimonialsDots"></div>
+            <button class="btn-icon-round" id="nextTestimonial" aria-label="Next Review">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Appointment Booking --- -->
+    <section id="book-appointment" class="section bg-light">
+      <div class="container booking-grid">
+        <div class="booking-info reveal">
+          <span class="section-tag">Schedule Consultation</span>
+          <h2 class="booking-info-header">Start Your Journey to Better Health</h2>
+          <p class="booking-info-text">Book your checkup or doctor consult using our secure online scheduler. Once submitted, our reception team will review physician availability and call or email you to confirm the exact hour slot.</p>
+          
+          <div class="booking-perks">
+            <div class="booking-perk-item">
+              <div class="booking-perk-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div class="booking-perk-title">Call confirmation in under 15 minutes</div>
+            </div>
+            <div class="booking-perk-item">
+              <div class="booking-perk-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div class="booking-perk-title">Zero scheduling or pre-payment fees</div>
+            </div>
+            <div class="booking-perk-item">
+              <div class="booking-perk-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div class="booking-perk-title">Flexible reschedule policy up to 2 hours prior</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-card reveal" style="transition-delay: 0.1s;">
+          <form id="appointmentForm" novalidate>
+            <div class="form-group">
+              <label for="patientName" class="form-label">Patient Name</label>
+              <input type="text" id="patientName" class="form-control" placeholder="Enter full name" required>
+              <div class="error-message" id="patientNameError">Please enter patient name.</div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="patientPhone" class="form-label">Phone Number</label>
+                <input type="tel" id="patientPhone" class="form-control" placeholder="10-digit number" required pattern="[0-9]{10}">
+                <div class="error-message" id="patientPhoneError">Please enter a valid 10-digit phone number.</div>
+              </div>
+              
+              <div class="form-group">
+                <label for="patientEmail" class="form-label">Email Address</label>
+                <input type="email" id="patientEmail" class="form-control" placeholder="name@domain.com" required>
+                <div class="error-message" id="patientEmailError">Please enter a valid email address.</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="preferredDate" class="form-label">Preferred Date</label>
+                <input type="date" id="preferredDate" class="form-control" required>
+                <div class="error-message" id="preferredDateError">Please choose a valid upcoming date.</div>
+              </div>
+              
+              <div class="form-group">
+                <label for="department" class="form-label">Department / Specialist</label>
+                <select id="department" class="form-control" required>
+                  <option value="" disabled selected>Select department</option>
+                  <option value="General Consultation">General Consultation</option>
+                  <option value="Cardiology Specialist">Cardiology Specialist</option>
+                  <option value="Pediatric Care">Pediatric Care</option>
+                  <option value="Preventive Health Checkup">Preventive Health Checkup</option>
+                  <option value="Vaccination Programme">Vaccination Programme</option>
+                </select>
+                <div class="error-message" id="departmentError">Please select a department.</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-xs);" id="submitBtn">
+              Confirm Appointment Request
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Contact & Location --- -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Find Zexa Clinic</span>
+          <h2 class="section-title">Contact & Timings</h2>
+          <p>We are situated in a quiet, high-end residential and commercial sector with easy parking access.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card-box reveal">
+            <!-- Address -->
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="contact-detail-content">
+                <h4>Clinic Address</h4>
+                <p>E-512, Greater Kailash Part 2,<br>New Delhi, Delhi 110048, India</p>
+              </div>
+            </div>
+
+            <!-- Phone & Email -->
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="contact-detail-content">
+                <h4>Phone & Inquiries</h4>
+                <p><a href="tel:+919999999999">+91 99999 99999</a></p>
+                <p><a href="mailto:info@zexaclinic.in">info@zexaclinic.in</a></p>
+              </div>
+            </div>
+
+            <!-- Timings -->
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="contact-detail-content">
+                <h4>Working Hours</h4>
+                <p>Monday - Saturday: 8:00 AM - 8:00 PM</p>
+                <p>Sunday: Closed (Emergencies Only)</p>
+              </div>
+            </div>
+
+            <!-- Quick WhatsApp CTA -->
+            <div style="margin-top: var(--space-sm);">
+              <a href="https://wa.me/919999999999?text=Hello%20Zexa%20Clinic,%20I'd%20like%20to%20ask%20a%20question." class="btn btn-secondary" style="border-color: var(--color-whatsapp); color: var(--color-whatsapp); gap: var(--space-xs);" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.59 1.977 14.113.953 11.999.953c-5.442 0-9.866 4.372-9.87 9.802-.001 1.77.487 3.5 1.414 5.016l-.994 3.63 3.738-.97c1.496.812 3.109 1.238 4.77 1.223z"/></svg>
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Graphic Interactive Map -->
+          <div class="contact-map-wrapper reveal" style="transition-delay: 0.1s;">
+            <div class="map-placeholder">
+              <div class="map-graphic">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="map-placeholder-title">Interactive Map Loading</div>
+              <div class="map-placeholder-subtitle">Zexa Clinic, E-512, Greater Kailash Part 2, New Delhi, Delhi 110048</div>
+              <a href="https://maps.google.com/?q=Greater+Kailash+2+New+Delhi" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                Open in Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- --- Footer --- -->
+  <footer class="footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="color: var(--color-accent);" aria-label="Zexa Clinic Home">
+          <span class="logo-icon"></span>Zexa Clinic
+        </a>
+        <p>Premium, trustworthy healthcare services delivering high-end family practice and specialist consultations in India.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" class="social-link" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Clinic Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services" class="footer-link">General Consultation</a></li>
+          <li><a href="#services" class="footer-link">Specialist Cardiology</a></li>
+          <li><a href="#services" class="footer-link">Pediatrics Care</a></li>
+          <li><a href="#services" class="footer-link">Preventive Diagnostics</a></li>
+          <li><a href="#services" class="footer-link">Vaccination Plans</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Home</a></li>
+          <li><a href="#about" class="footer-link">About Zexa</a></li>
+          <li><a href="#why-choose-us" class="footer-link">Why Choose Us</a></li>
+          <li><a href="#doctors" class="footer-link">Our Consultants</a></li>
+          <li><a href="#book-appointment" class="footer-link">Book Now</a></li>
+          <li><a href="/admin/login.html" class="footer-link" id="adminLoginLink">Admin Login</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Emergency Support</h4>
+        <p style="font-size: 0.9rem; margin-bottom: var(--space-xs); color: var(--color-accent); font-weight: 600;">24 Hours Hotline</p>
+        <p style="font-size: 1.15rem; color: var(--color-accent); font-weight: 700; margin-bottom: var(--space-sm);"><a href="tel:+919999999999" style="color: inherit; text-decoration: none;">+91 99999 99999</a></p>
+        <p style="font-size: 0.85rem;">For immediate critical support, call our emergency line directly.</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Zexa Clinic. All rights reserved. Registered Indian Private Healthcare Facility.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- Floating WhatsApp CTA --- -->
+  <a href="https://wa.me/919999999999?text=Hello%20Zexa%20Clinic,%20I'd%20like%20to%20ask%20a%20question." class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat with Zexa Clinic on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.59 1.977 14.113.953 11.999.953c-5.442 0-9.866 4.372-9.87 9.802-.001 1.77.487 3.5 1.414 5.016l-.994 3.63 3.738-.97c1.496.812 3.109 1.238 4.77 1.223z"/></svg>
+    Chat Now
+  </a>
+
+  <!-- Script -->
+  <script src="app.js"></script>
+</body>
+</html>

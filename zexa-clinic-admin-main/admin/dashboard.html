@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Zexa Clinic | Admin Dashboard</title>
+  
+  <!-- Preconnect Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+  
+  <!-- Style dependencies -->
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    body {
+      background-color: var(--color-secondary);
+      font-family: var(--font-body);
+      color: var(--color-text-dark);
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent body scroll, layout handles it */
+    }
+
+    /* Layout structure */
+    .dashboard-layout {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background-color: var(--color-accent);
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .sidebar-header {
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .sidebar-nav {
+      flex-grow: 1;
+      padding: var(--space-md) 0;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.75rem var(--space-lg);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(2, 31, 148, 0.04);
+      color: var(--color-primary);
+    }
+
+    .nav-item.active {
+      background-color: rgba(2, 31, 148, 0.08);
+      color: var(--color-primary);
+      border-left-color: var(--color-primary);
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.8;
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    /* Main Area */
+    .main-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: #f9fbfb;
+    }
+
+    .top-header {
+      background-color: var(--color-accent);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.75rem var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      height: 64px;
+    }
+
+    .user-info {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .btn-logout {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-accent);
+      color: var(--color-text-dark);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background-color: #fca5a5;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    .content-area {
+      flex-grow: 1;
+      padding: var(--space-xl);
+      overflow-y: auto;
+    }
+
+    /* Views */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .view-title {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+    }
+
+    /* Dashboard Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .stat-card {
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-val {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-top: var(--space-xs);
+    }
+
+    /* Tables & Controls */
+    .controls-panel {
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (min-width: 768px) {
+      .controls-panel {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .filters-group {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-sm);
+      width: 100%;
+    }
+
+    .search-input {
+      flex-grow: 1;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+    }
+
+    .filter-select {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      background-color: var(--color-accent);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5); z-index: 1000; display: none;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: var(--color-accent); border-radius: var(--radius-lg);
+      padding: var(--space-xl); width: 100%; max-width: 500px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: var(--space-md); right: var(--space-md);
+      cursor: pointer; background: none; border: none; font-size: 1.5rem; color: var(--color-text-muted);
+    }
+    .form-input {
+      width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); font-size: 0.9rem; margin-top: 4px; font-family: var(--font-body);
+    }
+    .form-input:focus { outline: none; border-color: var(--color-primary); }
+
+    .btn { padding: 0.6rem 1.2rem; border-radius: var(--radius-sm); border: none; cursor: pointer; font-weight: 600; font-family: var(--font-body); }
+    .btn-primary { background-color: var(--color-primary); color: #fff; }
+    .btn-outline { border: 1px solid var(--color-border); background: transparent; }
+
+    .table-container {
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background-color: #f3f4f6;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 600;
+      color: var(--color-text-dark);
+      border-bottom: 1px solid var(--color-border);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .data-table td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: middle;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover { background-color: rgba(245, 242, 243, 0.5); }
+
+    .badge-dept {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .badge-dept.cardiology { background-color: rgba(2, 31, 148, 0.08); color: var(--color-primary); }
+    .badge-dept.pediatrics { background-color: rgba(16, 185, 129, 0.08); color: #10B981; }
+    .badge-dept.dentistry { background-color: rgba(245, 158, 11, 0.08); color: #D97706; }
+    .badge-dept.orthopedics { background-color: rgba(99, 102, 241, 0.08); color: #6366F1; }
+    .badge-dept.general { background-color: rgba(107, 114, 128, 0.08); color: #4B5563; }
+
+    /* Empty State / Placeholder */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: var(--color-accent);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-lg);
+      color: var(--color-text-muted);
+    }
+    
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+    
+    .empty-state h3 {
+      color: var(--color-text-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+
+    .no-records {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+    }
+
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      color: var(--color-primary);
+    }
+    @keyframes rotateSpinner { 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+          <span class="logo-icon"></span>Zexa Admin
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-target="dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" data-target="patients">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Patients
+        </a>
+        <a class="nav-item" data-target="appointments">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          Appointments
+        </a>
+        <a class="nav-item" data-target="doctors">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          Doctors
+        </a>
+        <a class="nav-item" data-target="departments">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          Departments
+        </a>
+        <a class="nav-item" data-target="billing">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          Billing
+        </a>
+        <a class="nav-item" data-target="pharmacy">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline><polyline points="7.5 19.79 7.5 14.6 3 12"></polyline><polyline points="21 12 16.5 14.6 16.5 19.79"></polyline><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Pharmacy
+        </a>
+        <a class="nav-item" data-target="laboratory">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H15"></path><path d="M10 3V14L5.5 19.5C5.1 19.9 5.3 20.5 5.8 20.5H18.2C18.7 20.5 18.9 19.9 18.5 19.5L14 14V3"></path><path d="M7 16H17"></path></svg>
+          Laboratory
+        </a>
+        <a class="nav-item" data-target="staff">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Staff
+        </a>
+        <a class="nav-item" data-target="beds">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          Beds & Rooms
+        </a>
+        <a class="nav-item" data-target="reports">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+          Reports
+        </a>
+        <a class="nav-item" data-target="settings">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+      
+      <header class="top-header">
+        <div class="user-info" id="adminWelcome">Welcome, Administrator</div>
+        <button id="logoutBtn" class="btn-logout">Sign Out</button>
+      </header>
+
+      <div class="content-area">
+        
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="view-dashboard" class="view-section active">
+          <h2 class="view-title">Overview Dashboard</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Booking Requests</div>
+              <div class="stat-val" id="totalBookings">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Today's Bookings</div>
+              <div class="stat-val" id="todayBookings">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Main Department</div>
+              <div class="stat-val" id="topDept">-</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PATIENTS VIEW -->
+        <section id="view-patients" class="view-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-lg);">
+            <h2 class="view-title" style="margin:0;">Patients Directory</h2>
+            <button class="btn btn-primary" onclick="openModal('patients')">+ Add Patient</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="patientsTable">
+              <thead><tr><th>Name</th><th>Contact</th><th>Age / Blood Group</th><th>Actions</th></tr></thead>
+              <tbody id="patientsList"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. APPOINTMENTS VIEW -->
+        <section id="view-appointments" class="view-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-lg);">
+            <h2 class="view-title" style="margin:0;">Manage Appointments</h2>
+            <button class="btn btn-primary" onclick="openModal('appointments')">+ Add Appointment</button>
+          </div>
+          
+          <div class="controls-panel">
+            <div class="filters-group">
+              <input type="text" id="searchInput" class="search-input" placeholder="Search patient name, email, or phone number...">
+              <select id="deptFilter" class="filter-select">
+                <option value="">All Departments</option>
+                <option value="General Consultation">General Consultation</option>
+                <option value="Cardiology Specialist">Cardiology Specialist</option>
+                <option value="Pediatric Care">Pediatric Care</option>
+                <option value="Preventive Health Checkup">Preventive Health Checkup</option>
+                <option value="Vaccination Programme">Vaccination Programme</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div id="loading" class="loading-spinner">
+              <svg class="spinner" width="36" height="36" viewBox="0 0 50 50" style="animation: rotateSpinner 1s linear infinite; fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round;">
+                <circle cx="25" cy="25" r="20" stroke-dasharray="80, 200" stroke-dashoffset="0"></circle>
+              </svg>
+            </div>
+            
+            <table class="data-table" id="appointmentsTable" style="display: none;">
+              <thead>
+                <tr>
+                  <th>Patient Details</th>
+                  <th>Preferred Date</th>
+                  <th>Department</th>
+                  <th>Requested At</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentsList">
+                <!-- Rows will be injected here -->
+              </tbody>
+            </table>
+
+            <div id="noRecords" class="no-records" style="display: none;">
+              No appointment requests found matching filters.
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. DOCTORS VIEW -->
+        <section id="view-doctors" class="view-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-lg);">
+            <h2 class="view-title" style="margin:0;">Our Doctors</h2>
+            <button class="btn btn-primary" onclick="openModal('doctors')">+ Add Doctor</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="doctorsTable">
+              <thead><tr><th>Name</th><th>Specialization</th><th>Contact</th><th>Actions</th></tr></thead>
+              <tbody id="doctorsList"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. DEPARTMENTS VIEW -->
+        <section id="view-departments" class="view-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-lg);">
+            <h2 class="view-title" style="margin:0;">Clinical Departments</h2>
+            <button class="btn btn-primary" onclick="openModal('departments')">+ Add Department</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="departmentsTable">
+              <thead><tr><th>Department Name</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="departmentsList"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 6. BILLING VIEW -->
+        <section id="view-billing" class="view-section">
+          <h2 class="view-title">Billing & Invoices</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            <h3>Billing Module Coming Soon</h3>
+            <p>Financial tracking, patient invoices, and insurance claims.</p>
+          </div>
+        </section>
+
+        <!-- 7. PHARMACY VIEW -->
+        <section id="view-pharmacy" class="view-section">
+          <h2 class="view-title">Pharmacy Inventory</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            <h3>Pharmacy Coming Soon</h3>
+            <p>Manage medicines, stock levels, and prescriptions.</p>
+          </div>
+        </section>
+
+        <!-- 8. LABORATORY VIEW -->
+        <section id="view-laboratory" class="view-section">
+          <h2 class="view-title">Laboratory & Diagnostics</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H15"></path><path d="M10 3V14L5.5 19.5C5.1 19.9 5.3 20.5 5.8 20.5H18.2C18.7 20.5 18.9 19.9 18.5 19.5L14 14V3"></path><path d="M7 16H17"></path></svg>
+            <h3>Laboratory Coming Soon</h3>
+            <p>Track test results, diagnostics, and lab requests.</p>
+          </div>
+        </section>
+
+        <!-- 9. STAFF VIEW -->
+        <section id="view-staff" class="view-section">
+          <h2 class="view-title">Staff & HR</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <h3>Staff Module Coming Soon</h3>
+            <p>Manage nurses, receptionists, and administrative staff.</p>
+          </div>
+        </section>
+
+        <!-- 10. BEDS & ROOMS VIEW -->
+        <section id="view-beds" class="view-section">
+          <h2 class="view-title">Beds & Rooms Allocation</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <h3>Ward Management Coming Soon</h3>
+            <p>Track room occupancy and bed allocations.</p>
+          </div>
+        </section>
+
+        <!-- 11. REPORTS VIEW -->
+        <section id="view-reports" class="view-section">
+          <h2 class="view-title">Analytics & Reports</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+            <h3>Reports Coming Soon</h3>
+            <p>Generate financial and operational clinic reports.</p>
+          </div>
+        </section>
+
+        <!-- 12. SETTINGS VIEW -->
+        <section id="view-settings" class="view-section">
+          <h2 class="view-title">System Settings</h2>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <h3>Settings Module Coming Soon</h3>
+            <p>Configure clinic details, integrations, and user roles.</p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Global CRUD Modal -->
+    <div class="modal-overlay" id="crudModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3 id="modalTitle" style="margin-top:0; color:var(--color-primary); margin-bottom:var(--space-md);">Add Record</h3>
+        <form id="crudForm">
+          <div id="modalFormFields"></div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:var(--space-md);">Save Record</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- ROUTER LOGIC ---
+      const navItems = document.querySelectorAll('.nav-item');
+      const viewSections = document.querySelectorAll('.view-section');
+
+      const switchView = (targetId) => {
+        // Update active nav
+        navItems.forEach(item => {
+          if(item.dataset.target === targetId) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        // Update active section
+        viewSections.forEach(section => {
+          if(section.id === `view-${targetId}`) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+      };
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const target = item.dataset.target;
+          if (target) switchView(target);
+        });
+      });
+
+      // --- APPOINTMENTS DATA LOGIC ---
+      const appointmentsList = document.getElementById('appointmentsList');
+      const appointmentsTable = document.getElementById('appointmentsTable');
+      const loading = document.getElementById('loading');
+      const noRecords = document.getElementById('noRecords');
+      const searchInput = document.getElementById('searchInput');
+      const deptFilter = document.getElementById('deptFilter');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      const totalBookingsEl = document.getElementById('totalBookings');
+      const todayBookingsEl = document.getElementById('todayBookings');
+      const topDeptEl = document.getElementById('topDept');
+
+      let appointments = [];
+
+      const fetchAppointments = () => {
+        fetch('/api/admin/appointments')
+          .then(async (response) => {
+            if (!response.ok) {
+              if (response.status === 401) {
+                window.location.href = '/admin/login.html';
+              }
+              throw new Error('Failed to retrieve appointments.');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            appointments = data;
+            renderAppointments();
+            calculateStats(appointments);
+          })
+          .catch((err) => {
+            console.error(err);
+            loading.style.display = 'none';
+            noRecords.textContent = 'Error loading records. Please refresh the page.';
+            noRecords.style.display = 'block';
+          });
+      };
+
+      const calculateStats = (records) => {
+        totalBookingsEl.textContent = records.length;
+        const todayStr = new Date().toISOString().split('T')[0];
+        const todayCount = records.filter(r => r.createdAt.startsWith(todayStr)).length;
+        todayBookingsEl.textContent = todayCount;
+
+        if (records.length === 0) {
+          topDeptEl.textContent = '-';
+          return;
+        }
+        const counts = {};
+        records.forEach(r => {
+          counts[r.department] = (counts[r.department] || 0) + 1;
+        });
+        const top = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+        topDeptEl.textContent = top;
+      };
+
+      const getDeptClass = (dept) => {
+        if (!dept) return 'general';
+        const d = dept.toLowerCase();
+        if (d.includes('cardio')) return 'cardiology';
+        if (d.includes('pediat')) return 'pediatrics';
+        if (d.includes('dent')) return 'dentistry';
+        if (d.includes('ortho')) return 'orthopedics';
+        return 'general';
+      };
+
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+      };
+
+      const formatDateTime = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        return date.toLocaleString('en-IN', { 
+          day: '2-digit', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+      };
+
+      const renderAppointments = () => {
+        loading.style.display = 'none';
+        
+        const searchVal = searchInput.value.toLowerCase().trim();
+        const deptVal = deptFilter.value;
+
+        const filtered = appointments.filter(record => {
+          const matchSearch = 
+            record.name.toLowerCase().includes(searchVal) ||
+            record.email.toLowerCase().includes(searchVal) ||
+            record.phone.includes(searchVal);
+          
+          const matchDept = deptVal === '' || record.department === deptVal;
+          return matchSearch && matchDept;
+        });
+
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        appointmentsList.innerHTML = '';
+
+        if (filtered.length === 0) {
+          appointmentsTable.style.display = 'none';
+          noRecords.style.display = 'block';
+          return;
+        }
+
+        noRecords.style.display = 'none';
+        appointmentsTable.style.display = 'table';
+
+        filtered.forEach(record => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <div class="patient-details">
+                <span class="patient-name">${record.name}</span>
+                <span class="patient-meta" style="font-size:0.8rem; color:var(--color-text-muted);">${record.email} &bull; ${record.phone}</span>
+              </div>
+            </td>
+            <td><div style="font-weight: 600;">${formatDate(record.date)}</div></td>
+            <td>
+              <span class="badge-dept ${getDeptClass(record.department)}">${record.department}</span>
+              <br><span class="badge-dept" style="margin-top:5px; background-color: ${record.status === 'Done' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(245, 158, 11, 0.08)'}; color: ${record.status === 'Done' ? '#10B981' : '#D97706'};">${record.status || 'Pending'}</span>
+            </td>
+            <td style="color: var(--color-text-muted); font-size: 0.85rem;">
+              ${formatDateTime(record.createdAt)}
+              <br>
+              ${record.status === 'Done' 
+                ? `<button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#D97706; border-color:#D97706;" onclick="updateAppointmentStatus('${record.id}', 'Pending')">Mark Pending</button>` 
+                : `<button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#10B981; border-color:#10B981;" onclick="updateAppointmentStatus('${record.id}', 'Done')">Mark Done</button>`}
+              <button class="btn btn-outline" style="margin-top:0.5rem; padding:0.2rem 0.5rem; font-size:0.75rem; color:#ef4444; border-color:#ef4444;" onclick="deleteAppointment('${record.id}')">Delete</button>
+            </td>
+          `;
+          appointmentsList.appendChild(row);
+        });
+      };
+
+      window.updateAppointmentStatus = (id, status) => {
+        fetch(`/api/admin/appointments/${id}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        })
+          .then(r => r.json())
+          .then(updated => {
+            const index = appointments.findIndex(i => i.id === id);
+            if (index !== -1) {
+              appointments[index] = updated;
+              renderAppointments();
+              calculateStats(appointments);
+            }
+          });
+      };
+
+      window.deleteAppointment = (id) => {
+        if(!confirm('Are you sure you want to delete this appointment?')) return;
+        fetch(`/api/admin/appointments/${id}`, { method: 'DELETE' })
+          .then(() => {
+            appointments = appointments.filter(i => i.id !== id);
+            renderAppointments();
+            calculateStats(appointments);
+          });
+      };
+
+      searchInput.addEventListener('input', renderAppointments);
+      deptFilter.addEventListener('change', renderAppointments);
+
+      // --- GENERIC CRUD LOGIC ---
+      const crudState = {
+        currentModule: null,
+        data: { patients: [], doctors: [], departments: [] }
+      };
+
+      const schemas = {
+        patients: [
+          { name: 'name', label: 'Full Name', type: 'text', required: true },
+          { name: 'phone', label: 'Phone Number', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'age', label: 'Age', type: 'number', required: true },
+          { name: 'bloodGroup', label: 'Blood Group', type: 'text', required: true }
+        ],
+        doctors: [
+          { name: 'name', label: 'Doctor Name', type: 'text', required: true },
+          { name: 'specialization', label: 'Specialization (e.g. Cardiology)', type: 'text', required: true },
+          { name: 'phone', label: 'Contact Number', type: 'text', required: true }
+        ],
+        departments: [
+          { name: 'name', label: 'Department Name', type: 'text', required: true },
+          { name: 'status', label: 'Status (Active/Inactive)', type: 'text', required: true }
+        ],
+        appointments: [
+          { name: 'name', label: 'Patient Name', type: 'text', required: true },
+          { name: 'phone', label: 'Phone Number', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'date', label: 'Preferred Date', type: 'date', required: true },
+          { name: 'department', label: 'Department (e.g. Cardiology)', type: 'text', required: true }
+        ]
+      };
+
+      const fetchCrudData = (module) => {
+        fetch(`/api/admin/${module}`)
+          .then(r => r.json())
+          .then(data => {
+            crudState.data[module] = data;
+            renderCrudTable(module);
+          });
+      };
+
+      window.renderCrudTable = (module) => {
+        const tbody = document.getElementById(`${module}List`);
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        
+        crudState.data[module].forEach(item => {
+          const tr = document.createElement('tr');
+          if (module === 'patients') {
+            tr.innerHTML = `<td><div style="font-weight:600;">${item.name}</div></td>
+                            <td><div style="font-size:0.85rem; color:var(--color-text-muted);">${item.phone}<br>${item.email}</div></td>
+                            <td>${item.age} yrs / ${item.bloodGroup}</td>
+                            <td><button class="btn btn-outline" style="padding:0.3rem 0.6rem; font-size:0.8rem; color:#ef4444; border-color:#ef4444;" onclick="deleteItem('${module}', '${item.id}')">Delete</button></td>`;
+          } else if (module === 'doctors') {
+            tr.innerHTML = `<td><div style="font-weight:600;">${item.name}</div></td>
+                            <td><span class="badge-dept cardiology">${item.specialization}</span></td>
+                            <td>${item.phone}</td>
+                            <td><button class="btn btn-outline" style="padding:0.3rem 0.6rem; font-size:0.8rem; color:#ef4444; border-color:#ef4444;" onclick="deleteItem('${module}', '${item.id}')">Delete</button></td>`;
+          } else if (module === 'departments') {
+            tr.innerHTML = `<td><div style="font-weight:600;">${item.name}</div></td>
+                            <td><span class="badge-dept pediatrics">${item.status}</span></td>
+                            <td><button class="btn btn-outline" style="padding:0.3rem 0.6rem; font-size:0.8rem; color:#ef4444; border-color:#ef4444;" onclick="deleteItem('${module}', '${item.id}')">Delete</button></td>`;
+          }
+          tbody.appendChild(tr);
+        });
+      };
+
+      window.openModal = (module) => {
+        crudState.currentModule = module;
+        const moduleName = module.charAt(0).toUpperCase() + module.slice(1, -1);
+        document.getElementById('modalTitle').textContent = `Add New ${moduleName}`;
+        
+        const fieldsContainer = document.getElementById('modalFormFields');
+        fieldsContainer.innerHTML = '';
+        
+        schemas[module].forEach(f => {
+          fieldsContainer.innerHTML += `
+            <div style="margin-bottom:var(--space-md);">
+              <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:5px;">${f.label}</label>
+              <input type="${f.type}" name="${f.name}" class="form-input" placeholder="Enter ${f.label.toLowerCase()}" ${f.required ? 'required' : ''}>
+            </div>
+          `;
+        });
+        
+        document.getElementById('crudModal').classList.add('active');
+      };
+
+      window.closeModal = () => {
+        document.getElementById('crudModal').classList.remove('active');
+        document.getElementById('crudForm').reset();
+      };
+
+      document.getElementById('crudForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const payload = Object.fromEntries(formData.entries());
+        const module = crudState.currentModule;
+        
+        fetch(`/api/admin/${module}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json()).then(newItem => {
+          if (module === 'appointments') {
+            appointments.push(newItem);
+            renderAppointments();
+            calculateStats(appointments);
+          } else {
+            crudState.data[module].push(newItem);
+            renderCrudTable(module);
+          }
+          closeModal();
+        });
+      });
+
+      window.deleteItem = (module, id) => {
+        if(!confirm('Are you sure you want to delete this record?')) return;
+        fetch(`/api/admin/${module}/${id}`, { method: 'DELETE' })
+          .then(() => {
+            crudState.data[module] = crudState.data[module].filter(i => i.id !== id);
+            renderCrudTable(module);
+          });
+      };
+
+      fetchCrudData('patients');
+      fetchCrudData('doctors');
+      fetchCrudData('departments');
+
+      logoutBtn.addEventListener('click', () => {
+        logoutBtn.disabled = true;
+        fetch('/api/admin/logout', { method: 'POST' })
+          .then(() => { window.location.href = '/admin/login.html'; })
+          .catch((err) => { window.location.href = '/admin/login.html'; });
+      });
+
+      fetchAppointments();
+    });
+  </script>
+</body>
+</html>

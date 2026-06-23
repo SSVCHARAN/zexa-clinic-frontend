@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Zexa Clinic | Admin Access</title>
+  
+  <!-- Preconnect Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+  
+  <!-- Reuse main stylesheet for design system constants -->
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    body {
+      background-color: var(--color-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: var(--space-md);
+    }
+
+    .login-container {
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      width: 100%;
+      max-width: 440px;
+      box-shadow: var(--shadow-premium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle background glow for premium feel */
+    .login-glow {
+      position: absolute;
+      top: -20%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(2, 31, 148, 0.05) 0%, rgba(2, 31, 148, 0) 70%);
+      filter: blur(20px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .login-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+
+    .login-header .logo {
+      justify-content: center;
+      margin-bottom: var(--space-sm);
+    }
+
+    .login-title {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-xxs);
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+
+    .security-banner {
+      background-color: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      margin-bottom: var(--space-md);
+      font-size: 0.8rem;
+      color: #b91c1c; /* Deep red security warning */
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-xs);
+    }
+
+    .security-banner svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-dark);
+      transition: var(--transition-fast);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(2, 31, 148, 0.08);
+    }
+
+    .form-control.error {
+      border-color: #ef4444;
+      background-color: rgba(239, 68, 68, 0.02);
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: var(--space-sm);
+      position: relative;
+      z-index: 1;
+    }
+
+    .global-error-box {
+      background-color: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      margin-bottom: var(--space-md);
+      font-size: 0.85rem;
+      color: #ef4444;
+      display: none;
+      text-align: center;
+    }
+
+    .back-home {
+      display: inline-block;
+      margin-top: var(--space-md);
+      font-size: 0.85rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+      transition: var(--transition-fast);
+    }
+
+    .back-home:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-glow"></div>
+    
+    <div class="login-header">
+      <a href="/" class="logo">
+        <span class="logo-icon"></span>Zexa Clinic
+      </a>
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-subtitle">Sign in to manage patient appointments</p>
+    </div>
+
+    <!-- Security Warning Banner -->
+    <div class="security-banner">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <div>
+        <strong>Security Warning:</strong> Authorized admin personnel only. All access requests are logged.
+      </div>
+    </div>
+
+    <!-- Global Limiter / Failures Box -->
+    <div class="global-error-box" id="globalErrorBox"></div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" placeholder="Enter username" autocomplete="username" required>
+        <div class="error-message" id="usernameError">Username is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" autocomplete="current-password" required>
+        <div class="error-message" id="passwordError">Password is required.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+        Sign In Securely
+      </button>
+    </form>
+
+    <a href="/" class="back-home">← Return to Clinic Site</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('loginForm');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const submitBtn = document.getElementById('submitBtn');
+      const globalErrorBox = document.getElementById('globalErrorBox');
+
+      const showError = (inputElement, errorElement, show = true) => {
+        if (show) {
+          inputElement.classList.add('error');
+          errorElement.style.display = 'block';
+        } else {
+          inputElement.classList.remove('error');
+          errorElement.style.display = 'none';
+        }
+      };
+
+      const validateInput = () => {
+        let isValid = true;
+        if (usernameInput.value.trim() === '') {
+          showError(usernameInput, document.getElementById('usernameError'), true);
+          isValid = false;
+        } else {
+          showError(usernameInput, document.getElementById('usernameError'), false);
+        }
+
+        if (passwordInput.value === '') {
+          showError(passwordInput, document.getElementById('passwordError'), true);
+          isValid = false;
+        } else {
+          showError(passwordInput, document.getElementById('passwordError'), false);
+        }
+        return isValid;
+      };
+
+      // Realtime cleanup
+      [usernameInput, passwordInput].forEach(input => {
+        input.addEventListener('input', () => {
+          const errorId = `${input.id}Error`;
+          const errorEl = document.getElementById(errorId);
+          if (errorEl) showError(input, errorEl, false);
+          globalErrorBox.style.display = 'none';
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        globalErrorBox.style.display = 'none';
+
+        if (!validateInput()) return;
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Authenticating...';
+
+        fetch('/api/admin/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: usernameInput.value.trim(),
+            password: passwordInput.value
+          })
+        })
+        .then(async (response) => {
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || 'Authentication failed.');
+          }
+          return data;
+        })
+        .then((data) => {
+          // Success: redirect to dashboard
+          window.location.href = '/admin/dashboard.html';
+        })
+        .catch((err) => {
+          globalErrorBox.textContent = err.message;
+          globalErrorBox.style.display = 'block';
+          passwordInput.value = ''; // clear password on fail
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
